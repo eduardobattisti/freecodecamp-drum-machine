@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+
+@font-face {
+	src: url('../../assets/fonts/MUSICNET.ttf');
+	font-family: "Digital Led";
+}
+
+.drum-machine {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	width: 30rem;
+	height: 55rem;
+	background-color: #181e1e;
+
+	h1 {
+		border: 2px solid lightgrey;
+		padding: 0.8rem 1.6rem;
+		font-size: 2.5rem;
+		color: white;
+		font-family: 'Dancing Script', cursive;
+	}
+
+}
+
+.switchSet {
+	width: 100%;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.panel {
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 1rem;
+	width: 22rem;
+	height: 6rem;
+	background-color: #649bb8;
+
+	h2 {
+		font-size: 3rem;
+		font-weight: 500;
+		font-family: "Digital Led", sans-serif;
+	}
+
+}
+
+.slider-audio {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.875rem;
+	width: 20rem;
+	height: 3rem;
+
+	.drum-slier {
+		background-color: white;
+	}
+
+}
+
+.buttonSet {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	column-gap: 0.4rem;
+	row-gap: 0.4rem;
+
+	.drumButton {
+		width: 8rem;
+		height: 8rem;
+		background-color: #666472;
+		font-size: 2rem;
+		font-weight: 500;
+		color: #fff;
+
+		&:active {
+			color: #000;
+			background-color: #f2921a;
+		}
+
+	}
+}
+
