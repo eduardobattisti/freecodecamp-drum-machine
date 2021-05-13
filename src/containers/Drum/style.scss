@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
 
 @font-face {
-	src: url('../../assets/fonts/MUSICNET.ttf');
+	src: url('../../assets/fonts/Led-Display.ttf');
 	font-family: "Digital Led";
 }
 
@@ -13,10 +13,11 @@
 	width: 30rem;
 	height: 55rem;
 	background-color: #181e1e;
+	border: 5px outset lightgray;
 
 	h1 {
 		border: 2px solid lightgrey;
-		padding: 0.8rem 1.6rem;
+		padding: 0.8rem 2.5rem;
 		font-size: 2.5rem;
 		color: white;
 		font-family: 'Dancing Script', cursive;
@@ -28,6 +29,16 @@
 	width: 100%;
 	display: flex;
 	justify-content: space-evenly;
+
+	div h4 {
+		text-align: center;
+		font-size: 1.3rem;
+		font-family: 'Dancing Script', cursive;
+		color: white;
+		border: 2px solid lightgrey;
+		padding: 0.4rem 0;
+	}
+
 }
 
 .panel {

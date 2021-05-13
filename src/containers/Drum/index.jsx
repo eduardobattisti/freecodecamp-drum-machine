@@ -1,30 +1,90 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Slider from 'rc-slider';
 import { Button, Switch } from '../../components';
+
+import soundDrum from '../../utils/drum.sound-drum';
+import soundPiano from '../../utils/drum.sound-piano';
 
 import 'rc-slider/assets/index.css';
 import './style.scss';
 
 const Drum = () => {
-	const onClickTest = () => {
-		console.log('abc');
+	const [screenState, setScreenState] = useState('');
+	const [isDrum, setIsDrum] = useState(true);
+
+	const onClickPad = (event) => {
+		const { target } = event;
+		setScreenState(target.innerText);
 	};
+
+	const onClickSwitchDrum = () => {
+		setIsDrum(!isDrum);
+	};
+
+	const onChangeVolume = (event) => {
+		const volume = event.toString();
+		setScreenState(volume);
+	};
+
+	const drumButtons = soundDrum.map((current) => {
+		const {
+			id, keyCode, keyTrigger, url,
+		} = current;
+		return (
+			<Button
+				key={`drum-button-${id}`}
+				id={id}
+				keyCode={keyCode}
+				keyTrigger={keyTrigger}
+				url={url}
+				onClick={onClickPad}
+				className="drumButton"
+			>
+				Q
+			</Button>
+		);
+	});
+
+	const pianoButtons = soundPiano.map((current) => {
+		const {
+			id, keyCode, keyTrigger, url,
+		} = current;
+		return (
+			<Button
+				key={`piano-button-${id}`}
+				id={id}
+				keyCode={keyCode}
+				keyTrigger={keyTrigger}
+				url={url}
+				onClick={onClickPad}
+				className="drumButton"
+			>
+				Q
+			</Button>
+		);
+	});
 
 	return (
 		<div className="drum-machine">
 			<h1>Drum Machine</h1>
 			<div className="switchSet">
-				<Switch id="power" onClick={onClickTest} className="switchTest" />
-				<Switch id="bank" onClick={onClickTest} className="switchTest" />
+				<div>
+					<h4>Power</h4>
+					<Switch id="power" onClick={onClickSwitchDrum} className="switchTest" />
+				</div>
+				<div>
+					<h4>Bank</h4>
+					<Switch id="bank" onClick={onClickSwitchDrum} className="switchTest" />
+				</div>
 			</div>
 			<div className="panel">
-				<h2>Teste</h2>
+				<h2>{screenState}</h2>
 			</div>
 			<div className="slider-audio">
 				<Slider
+					onChange={onChangeVolume}
 					min={0}
 					max={100}
-					progress={0}
 					trackStyle={{ backgroundColor: '#f2921a' }}
 					railStyle={{ backgroundColor: ' #666472' }}
 					handleStyle={{
@@ -34,15 +94,9 @@ const Drum = () => {
 				/>
 			</div>
 			<div className="buttonSet">
-				<Button id="teste1" onClick={onClickTest} className="drumButton">Q</Button>
-				<Button id="teste2" onClick={onClickTest} className="drumButton">W</Button>
-				<Button id="teste3" onClick={onClickTest} className="drumButton">E</Button>
-				<Button id="teste4" onClick={onClickTest} className="drumButton">A</Button>
-				<Button id="teste5" onClick={onClickTest} className="drumButton">S</Button>
-				<Button id="teste6" onClick={onClickTest} className="drumButton">D</Button>
-				<Button id="teste6" onClick={onClickTest} className="drumButton">Z</Button>
-				<Button id="teste6" onClick={onClickTest} className="drumButton">X</Button>
-				<Button id="teste6" onClick={onClickTest} className="drumButton">C</Button>
+				{ isDrum
+					? drumButtons
+					: pianoButtons}
 			</div>
 
 		</div>
