@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 
 const Button = (props) => {
 	const {
-		id, onClick, className, keyCode, keyTrigger, url,
+		id, onClick, onKeyPress, className, keyCode, keyTrigger, url,
 	} = props;
 
 	return (
@@ -11,11 +11,16 @@ const Button = (props) => {
 			type="button"
 			id={id}
 			keyCode={keyCode}
-			keyTrigger={keyTrigger}
 			url={url}
 			onClick={onClick}
+			onKeyPress={onKeyPress}
 			className={className}
 		>
+			<audio
+				className="clip"
+				id={keyTrigger}
+				src={url}
+			/>
 			{keyTrigger}
 		</button>
 	);
@@ -27,6 +32,7 @@ Button.propTypes = {
 	keyTrigger: propTypes.string.isRequired,
 	url: propTypes.string.isRequired,
 	onClick: propTypes.func.isRequired,
+	onKeyPress: propTypes.func.isRequired,
 	className: propTypes.string.isRequired,
 };
 
