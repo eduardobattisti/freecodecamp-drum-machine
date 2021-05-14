@@ -17,53 +17,69 @@ const Drum = () => {
 	const [isOn, setIsOn] = useState(false);
 
 	const playSound = (id) => {
-		const sound = document.getElementById(id);
-		sound.currentTime = 0;
-		sound.play();
+		if (isOn) {
+			const sound = document.getElementById(id);
+			sound.currentTime = 0;
+			sound.play();
+		}
 	};
 
 	const keyPress = (event) => {
-		const { key, keyCode } = event;
-		const uppercaseKey = key.toUpperCase();
-		const button = document.querySelector(`button[keycode="${keyCode}"]`) || null;
-		const hasKey = document.getElementById(uppercaseKey) || null;
-		if (hasKey) {
-			setScreenState(button.id);
-			playSound(uppercaseKey);
+		if (isOn) {
+			const { key, keyCode } = event;
+			const uppercaseKey = key.toUpperCase();
+			const button = document.querySelector(`button[keycode="${keyCode}"]`) || null;
+			const hasKey = document.getElementById(uppercaseKey) || null;
+			if (hasKey) {
+				setScreenState(button.id);
+				playSound(uppercaseKey);
+			}
 		}
 	};
 
 	const onClickPad = (event) => {
-		const { id, innerText } = event.target;
-		const formattedString = stringFormatter(id);
-		playSound(innerText);
-		setScreenState(formattedString);
+		if (isOn) {
+			const { id, innerText } = event.target;
+			const formattedString = stringFormatter(id);
+			playSound(innerText);
+			setScreenState(formattedString);
+		}
 	};
 
 	const switchOnOff = () => {
 		if (!isOn) {
 			setIsOn(!isOn);
 			setScreenState('On');
+			setTimeout(() => {
+				setScreenState('');
+			}, 1000);
 		} else {
 			setIsOn(!isOn);
 			setScreenState('Off');
+			setTimeout(() => {
+				setScreenState('');
+			}, 1000);
 		}
 	};
 
 	const onClickSwitchDrum = () => {
-		if (!isDrum) {
-			setScreenState('Heater Kit');
-			setIsDrum(!isDrum);
-		} else {
-			setScreenState('Smooth Piano Kit');
-			setIsDrum(!isDrum);
+		if (isOn) {
+			if (!isDrum) {
+				setScreenState('Heater Kit');
+				setIsDrum(!isDrum);
+			} else {
+				setScreenState('Smooth Piano Kit');
+				setIsDrum(!isDrum);
+			}
 		}
 	};
 
 	const onChangeVolume = (event) => {
-		const volume = event.toString();
-		setVolume((event/100));
-		setScreenState(volume);
+		if (isOn) {
+			const volume = event.toString();
+			setVolume((event/100));
+			setScreenState(volume);
+		}
 	};
 
 	useEffect(() => {
