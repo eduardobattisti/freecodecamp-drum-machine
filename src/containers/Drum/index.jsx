@@ -29,6 +29,10 @@ const Drum = () => {
 			const { key, keyCode } = event;
 			const uppercaseKey = key.toUpperCase();
 			const button = document.querySelector(`button[keycode="${keyCode}"]`) || null;
+			button.classList.add('drump-pad-key-press');
+			setTimeout(() => {
+				button.classList.remove('drump-pad-key-press');
+			}, 100);
 			const hasKey = document.getElementById(uppercaseKey) || null;
 			if (hasKey) {
 				setScreenState(button.id);
