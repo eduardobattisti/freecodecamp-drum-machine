@@ -13,6 +13,8 @@ import './style.scss';
 const Drum = () => {
 	const [screenState, setScreenState] = useState('');
 	const [isDrum, setIsDrum] = useState(false);
+	const [volume, setVolume] = useState(0.5);
+	const [isOn, setIsOn] = useState(false);
 
 	const playSound = (id) => {
 		const sound = document.getElementById(id);
@@ -21,11 +23,13 @@ const Drum = () => {
 	};
 
 	const keyPress = (event) => {
-		const { keyCode, target } = event;
-		console.log(target);
-		console.log(keyCode);
-		if (false) {
-			playSound(target.innerText);
+		const { key, keyCode } = event;
+		const uppercaseKey = key.toUpperCase();
+		const button = document.querySelector(`button[keycode="${keyCode}"]`) || null;
+		const hasKey = document.getElementById(uppercaseKey) || null;
+		if (hasKey) {
+			setScreenState(button.id);
+			playSound(uppercaseKey);
 		}
 	};
 
@@ -34,6 +38,16 @@ const Drum = () => {
 		const formattedString = stringFormatter(id);
 		playSound(innerText);
 		setScreenState(formattedString);
+	};
+
+	const switchOnOff = () => {
+		if (!isOn) {
+			setIsOn(!isOn);
+			setScreenState('On');
+		} else {
+			setIsOn(!isOn);
+			setScreenState('Off');
+		}
 	};
 
 	const onClickSwitchDrum = () => {
@@ -48,6 +62,7 @@ const Drum = () => {
 
 	const onChangeVolume = (event) => {
 		const volume = event.toString();
+		setVolume((event/100));
 		setScreenState(volume);
 	};
 
@@ -73,6 +88,7 @@ const Drum = () => {
 				onClick={onClickPad}
 				onKeyPress={keyPress}
 				className="drum-pad"
+				volume={volume}
 			/>
 		);
 	});
@@ -89,8 +105,9 @@ const Drum = () => {
 				keyTrigger={keyTrigger}
 				url={url}
 				onClick={onClickPad}
-				onKeyPress={keyPress}
+				onKeyDown={keyPress}
 				className="drum-pad"
+				volume={volume}
 			/>
 		);
 	});
@@ -101,11 +118,11 @@ const Drum = () => {
 			<div className="switchSet">
 				<div>
 					<h4>Power</h4>
-					<Switch id="power" onClick={onClickSwitchDrum} className="switchTest" />
+					<Switch id="power" onClick={switchOnOff} className="onOffSwitch" />
 				</div>
 				<div>
 					<h4>Bank</h4>
-					<Switch id="bank" onClick={onClickSwitchDrum} className="switchTest" />
+					<Switch id="bank" onClick={onClickSwitchDrum} className="drumPianoSwitch" />
 				</div>
 			</div>
 			<div id="display" className="panel">
@@ -114,6 +131,7 @@ const Drum = () => {
 			<div className="slider-audio">
 				<Slider
 					onChange={onChangeVolume}
+					defaultValue={50}
 					min={0}
 					max={100}
 					trackStyle={{ backgroundColor: '#f2921a' }}
@@ -124,9 +142,6 @@ const Drum = () => {
 					}}
 				/>
 			</div>
-			<audio
-				className="clip"
-			/>
 			<div className="buttonSet">
 				{ isDrum
 					? drumButtons
